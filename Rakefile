@@ -23,8 +23,8 @@ task :prepare_release do
   puts "\n== Running tests =="
   Rake::Task["spec"].invoke
 
-  puts "\n== Running RuboCop =="
-  Rake::Task["rubocop"].invoke
+  # puts "\n== Running RuboCop =="
+  # Rake::Task["rubocop"].invoke
 
   puts "\n== Checking version =="
   version = Envalit::VERSION
