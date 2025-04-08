@@ -2,13 +2,11 @@
 
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in envalid.gemspec
 gemspec
 
+gem "pry"
 gem "rake", "~> 13.0"
-
-group :test do
-  gem "pry"
-  gem "rspec", "~> 3.0"
-  gem "rubocop"
-end
+gem "rspec", "~> 3.0"
+gem "rubocop"
+gem "ruby-lsp", "~> 0.23.6"
+gem "webmock"

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-module Envalid
-  VERSION = "0.0.0"
+module Envalit
+  VERSION = "0.1.0"
 end
