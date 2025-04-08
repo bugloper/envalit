@@ -108,7 +108,10 @@ module Envalit
     # @return [void]
     def validate_options(options)
       type = options[:type]
-      return unless type && !VALID_TYPES.include?(type)
+      return unless type
+
+      normalized_type = type.to_s.downcase.to_sym
+      return if VALID_TYPES.include?(normalized_type)
 
       raise ArgumentError,
             "#{ERROR_COLOR}Invalid type: #{type}. Valid types are: #{VALID_TYPES.join(', ')}#{RESET_COLOR}"
@@ -169,9 +172,10 @@ module Envalit
     # @return [void]
     def check_invalid_types
       invalid_vars = @schema.select do |key, opts|
-        next false if ENV[key].nil?
+        next false if ENV[key].nil? || !opts[:type]
 
-        case opts[:type]
+        type = opts[:type].to_s.downcase.to_sym
+        case type
         when :integer
           !ENV[key].match?(/\A-?\d+\z/)
         when :float

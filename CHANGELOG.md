@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2024-04-08
+
+### Fixed
+- Fixed type validation to support both symbol and string type definitions
+- Improved type normalization for better flexibility
+- Enhanced error handling for invalid types
+
 ## [0.1.1] - 2024-04-08
 
 ### Changed
@@ -30,7 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Helpful error messages with fix suggestions
 - Integration with dotenv for .env file handling
 
-[Unreleased]: https://github.com/bugloper/envalit/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/bugloper/envalit/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/bugloper/envalit/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/bugloper/envalit/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/bugloper/envalit/releases/tag/v0.1.0
 
