@@ -2,7 +2,7 @@
 
 require_relative "lib/envalit/version"
 
-Gem::Specification.new do |spec|
+Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.name          = "envalit"
   spec.version       = Envalit::VERSION
   spec.authors       = ["bugloper"]
@@ -42,5 +42,5 @@ Gem::Specification.new do |spec|
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
-  spec.metadata["rubygems_mfa_required"] = "true"
+  spec.metadata["rubygems_mfa_required"] = "false"
 end

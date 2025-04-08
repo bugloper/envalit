@@ -8,13 +8,14 @@ Envalit is a powerful Ruby gem for managing and validating environment variables
 
 ## Features
 
-- Simple and expressive configuration API
-- Type validation (string, integer, boolean, float)
-- Default values for optional variables
-- Automatic loading from `.env` files
-- Configurable validation modes (warn vs. strict)
-- Rails generator for easy setup
-- Comprehensive documentation
+- 🔍 **Type Validation**: Support for string, integer, boolean, and float types
+- 🚨 **Validation Modes**: Choose between warning or strict error modes
+- 📝 **Default Values**: Set fallback values for optional variables
+- 📚 **Documentation**: Add descriptions to document your environment variables
+- 🌈 **Colored Output**: Clear, colorized error messages for better visibility
+- 🚀 **Rails Integration**: Easy setup with Rails generator
+- 📁 **Dotenv Integration**: Automatic loading of `.env` files
+- 💡 **Helpful Errors**: Clear error messages with fix suggestions
 
 ## Installation
 
@@ -36,9 +37,9 @@ Or install it yourself as:
 $ gem install envalit
 ```
 
-### Rails Generator
+### Rails Setup
 
-Envalit provides a Rails generator to quickly set up your environment configuration:
+If you're using Rails, you can use our generator to quickly set up your environment configuration:
 
 ```bash
 $ rails generate envalit:install
@@ -47,10 +48,6 @@ $ rails generate envalit:install
 This will:
 1. Create `config/initializers/envalit.rb` with example configurations
 2. Create `.env.example` with sample environment variables
-3. Add common environment variables with type validation
-4. Set up strict validation for critical variables
-
-The generated files provide a starting point that you can customize for your application's needs.
 
 ## Usage
 
@@ -60,46 +57,52 @@ The generated files provide a starting point that you can customize for your app
 require 'envalit'
 
 Envalit.configure do |config|
-  # Database Configuration
+  # Required variable with type validation
   config.register "DATABASE_URL",
                  required: true,
                  strict: true,
                  description: "PostgreSQL connection URL"
 
-  # Application Settings
+  # Optional variable with default value
   config.register "PORT",
                  type: :integer,
                  default: 3000,
                  description: "Application port number"
 
-  # Feature Flags
+  # Boolean flag
   config.register "DEBUG_MODE",
                  type: :boolean,
                  default: false,
                  description: "Enable debug mode"
 end
 
-# Validate environment variables
-Envalit.validate  # Warns about missing variables
-Envalit.validate! # Raises errors for any missing required variables
+# Normal validation (warns about missing variables)
+Envalit.validate
+
+# Strict validation (raises errors for missing variables)
+Envalit.validate!
 ```
 
 ### Validation Modes
 
 Envalit provides two validation modes:
 
-```ruby
-# Normal validation (validate)
-Envalit.validate
-# - Warns about missing required variables that aren't marked as strict
-# - Raises errors only for variables marked as strict: true
-# - Good for development environments
+1. **Normal Mode** (`validate`):
+   - Warns about missing required variables
+   - Raises errors only for variables marked as `strict: true`
+   - Good for development environments
 
-# Strict validation (validate!)
-Envalit.validate!
-# - Always raises errors for any missing required variables
-# - Ignores the strict setting and treats all required variables as strict
-# - Good for production environments
+```ruby
+Envalit.validate # Prints warnings but doesn't halt execution
+```
+
+2. **Strict Mode** (`validate!`):
+   - Raises errors for any missing required variables
+   - Ignores the `strict` setting
+   - Recommended for production environments
+
+```ruby
+Envalit.validate! # Raises ValidationError if any required variables are missing
 ```
 
 ### Type Validation
@@ -108,56 +111,39 @@ Envalit supports multiple data types:
 
 ```ruby
 Envalit.configure do |config|
-  # Integer validation
+  # String (default)
+  config.register "API_KEY",
+                 required: true
+
+  # Integer
   config.register "PORT",
                  type: :integer,
                  default: 3000
 
-  # Boolean validation
+  # Boolean
   config.register "CACHE_ENABLED",
                  type: :boolean,
                  default: true
 
-  # Float validation
+  # Float
   config.register "TIMEOUT",
                  type: :float,
                  required: true,
                  default: 5.5
-
-  # String validation (default)
-  config.register "API_KEY",
-                 required: true
 end
 ```
 
 ### Rails Integration
 
-#### Using the Generator
-
-Generate the initializer and example environment file:
-
-```bash
-$ rails generate envalit:install
-```
-
-This creates:
-- `config/initializers/envalit.rb` - Configuration file
-- `.env.example` - Example environment variables
-
-#### In a Rails Initializer
+In your Rails application, create an initializer:
 
 ```ruby
 # config/initializers/envalit.rb
 Envalit.configure do |config|
-  # Critical Variables (Strict Mode)
+  # Critical Variables
   config.register "SECRET_KEY_BASE",
                  required: true,
                  strict: true
-
-  # Database Configuration
-  config.register "DATABASE_URL",
-                 required: true,
-                 description: "PostgreSQL connection URL"
 
   # Optional Settings
   config.register "CACHE_TTL",
@@ -174,44 +160,22 @@ else
 end
 ```
 
-### Rake Task Integration
+### Error Messages
 
-```ruby
-# lib/tasks/envalit.rake
-namespace :envalit do
-  desc "Validate environment variables"
-  task validate: :environment do
-    Envalit.configure do |config|
-      # Production Critical Variables
-      if Rails.env.production?
-        config.register "DATABASE_URL", required: true, strict: true
-        config.register "REDIS_URL", required: true, strict: true
-      end
+Envalit provides clear, colorized error messages:
 
-      # Common Variables
-      config.register "APP_HOST", required: true
-      config.register "PORT", type: :integer, default: 3000
-    end
-
-    # Use appropriate validation mode
-    if Rails.env.production?
-      Envalit.validate!
-    else
-      Envalit.validate
-    end
-  end
-end
 ```
+Missing required environment variables:
+  - DATABASE_URL
+    Type: string
+    Description: PostgreSQL connection URL
 
-### Configuration Options
-
-Each environment variable can be registered with the following options:
-
-- `required: true/false` - Whether the variable must be present
-- `strict: true/false` - Raise error instead of warning for missing required variables
-- `type: :string/:integer/:boolean/:float` - Variable type validation
-- `default: value` - Default value if not set
-- `description: "text"` - Documentation for the variable
+To fix this:
+1. Create a .env file in your project root if it doesn't exist
+2. Copy values from .env.example to your .env file:
+   cp .env.example .env
+3. Update the values in your .env file with your actual configuration
+```
 
 ## Development
 
