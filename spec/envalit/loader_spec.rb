@@ -19,8 +19,8 @@ RSpec.describe Envalit::Loader do
 
   after do
     # Clean up test files
-    File.delete(env_file) if File.exist?(env_file)
-    File.delete(env_example_file) if File.exist?(env_example_file)
+    FileUtils.rm_f(env_file)
+    FileUtils.rm_f(env_example_file)
   end
 
   describe "#register" do
