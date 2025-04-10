@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Envalit::Loader do
+RSpec.describe Envalit::Valitator do
   let(:loader) { described_class.new }
   let(:env_file) { ".env" }
   let(:env_example_file) { ".env.example" }

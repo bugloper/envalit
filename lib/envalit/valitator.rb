@@ -27,7 +27,7 @@ module Envalit
   #   loader.validate
   #
   # @api private
-  class Loader
+  class Valitator
     # Valid types for environment variables
     VALID_TYPES = %i[string integer boolean float].freeze
 

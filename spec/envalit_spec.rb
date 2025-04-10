@@ -8,6 +8,6 @@ RSpec.describe Envalit do
   end
 
   it "exposes the Loader class" do
-    expect(Envalit::Loader).to be_a(Class)
+    expect(Envalit::Valitator).to be_a(Class)
   end
 end

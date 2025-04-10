@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "envalit/version"
-require_relative "envalit/loader"
+require_relative "envalit/valitator"
 require_relative "envalit/railtie" if defined?(Rails)
 
 # Envalit is a Ruby gem for managing and validating environment variables.
