@@ -45,7 +45,7 @@ module Envalit
     # @yield [self] Yields self for configuration
     # @return [void]
     def configure
-      @loader ||= Loader.new(Dir.pwd)
+      @loader ||= Valitator.new(Dir.pwd)
       yield(self)
     end
 
